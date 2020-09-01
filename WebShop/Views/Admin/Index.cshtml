@@ -1,0 +1,67 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    <h1>View1!</h1>
+    <h3>add product</h3>
+    <div id="productData">
+        Name:<input type="text" name="Name" /> <br/>
+        Type1:<input type="text" name="Type1" /> <br/>
+        Type2:<input type="text" name="Type2" /> <br/>
+        Description:<input type="text" name="Description" /> <br/>
+        Price:<input type="number" name="Price" /> <br/>
+        ImgSrc:<input type="text" name="ImgSrc" /> <br/>
+        ProductCounterId:<input type="number" name="ProductCounterId" /> <br/>
+    </div>
+    
+    <button onclick="createProduct()">new product</button>
+
+</div>
+<script type="text/javascript">
+
+    function createProduct() {
+        let childs = document.getElementById("productData").getElementsByTagName("input");
+        let product = {}
+        
+        for (let i = 0; i < childs.length; i++){
+            let name = childs[i].getAttribute("name");
+            product[name] = childs[i].value;
+        }
+        
+        product.Price = Number.parseInt(product.Price);
+        product.ProductCounterId = Number.parseInt(product.ProductCounterId);
+        
+        //console.log(product);
+        let sproduct = JSON.stringify(product);
+        //console.log(sproduct);
+        
+        const params = {
+            
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: sproduct
+        }
+        
+        fetch("/product",params)
+        
+    }
+
+
+</script>
+</body>
+
+
+
+</html>
